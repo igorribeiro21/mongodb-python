@@ -50,6 +50,7 @@ def test_select_many_with_properties():
         print(doc)
         print()
 
+@pytest.mark.skip(reason="Interação com banco")
 def test_select_if_properties_exists():
     orders_repository = OrdersRepository(conn)
     response = orders_repository.select_if_properties_exists()
@@ -58,3 +59,38 @@ def test_select_if_properties_exists():
     for doc in response:
         print(doc)
         print()
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_select_many_with_multiple_filter():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = {
+        "cupom": True,
+        "itens.refrigerante": { "$exists": True }
+     } # Semelhante a uma busca com AND em SQL
+    response = orders_repository.select_many(doc_filter)
+    print()
+    for doc in response:
+        print(doc)
+        print()
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_select_many_with_or_filter():
+    orders_repository = OrdersRepository(conn)
+    doc_filter = {
+        "$or": [
+            { "address":  { "$exists": True } },
+            { "itens.doce.tipo": "chocolate" }
+        ]
+     } # Semelhante a uma busca com OR em SQL
+    response = orders_repository.select_many(doc_filter)
+    print()
+    for doc in response:
+        print(doc)
+        print()
+
+def test_select_by_object_id():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68c8aa410e462b92be077db4"
+    response = orders_repository.select_by_object_id(object_id)
+    print()
+    print(response)
