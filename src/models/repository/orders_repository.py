@@ -45,3 +45,31 @@ class OrdersRepository:
             { "_id": ObjectId(object_id) }
         )
         return data
+
+    def edit_registry(self, object_id: str, new_values: dict) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_one(
+            { "_id": ObjectId(object_id) },
+            { "$set": new_values }
+        )
+
+    def edit_many_registries(self, filter_obj: dict, new_values: dict) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_many(
+            filter_obj,
+            { "$set": new_values }
+        )
+
+    def edit_registry_with_increment(self, object_id: str, field: str, increment_value: int) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_one(
+            { "_id": ObjectId(object_id) },
+            { "$inc": { field: increment_value } }
+        )
+
+    def edit_registry_with_decrement(self, object_id: str, field: str, decrement_value: int) -> None:
+        collection = self.__db_connection.get_collection(self.__collection_name)
+        collection.update_one(
+            { "_id": ObjectId(object_id) },
+            { "$inc": { field: -decrement_value } }
+        )

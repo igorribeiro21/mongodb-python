@@ -88,9 +88,53 @@ def test_select_many_with_or_filter():
         print(doc)
         print()
 
+@pytest.mark.skip(reason="Interação com banco")
 def test_select_by_object_id():
     orders_repository = OrdersRepository(conn)
     object_id = "68c8aa410e462b92be077db4"
     response = orders_repository.select_by_object_id(object_id)
     print()
     print(response)
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_edit_registry():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68a9c4825654e3483ac405b6"
+    new_values = {
+        "cupom": True,
+    }
+    orders_repository.edit_registry(object_id, new_values)
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_edit_many_registries():
+    orders_repository = OrdersRepository(conn)
+    filter_obj = {
+        "itens.refrigerante": { "$exists": True }
+    }
+    new_values = {
+        "itens.refrigerante.quantidade": 30,
+    }
+    orders_repository.edit_many_registries(filter_obj, new_values)
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_edit_registry__with_increment():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68a9c4825654e3483ac405b6"
+    field = "itens.pizza.quantidade"
+    increment_value = 5
+    orders_repository.edit_registry_with_increment(
+        object_id,
+        field,
+        increment_value
+    )
+
+def test_edit_registry__with_decrement():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68a9c4825654e3483ac405b6"
+    field = "itens.pizza.quantidade"
+    decrement_value = 5
+    orders_repository.edit_registry_with_decrement(
+        object_id,
+        field,
+        decrement_value
+    )
