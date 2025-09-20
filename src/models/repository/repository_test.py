@@ -128,6 +128,7 @@ def test_edit_registry__with_increment():
         increment_value
     )
 
+@pytest.mark.skip(reason="Interação com banco")
 def test_edit_registry__with_decrement():
     orders_repository = OrdersRepository(conn)
     object_id = "68a9c4825654e3483ac405b6"
@@ -138,3 +139,17 @@ def test_edit_registry__with_decrement():
         field,
         decrement_value
     )
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_delete_registry():
+    orders_repository = OrdersRepository(conn)
+    object_id = "68a9c4825654e3483ac405b6"
+    orders_repository.delete_registry(object_id)
+
+@pytest.mark.skip(reason="Interação com banco")
+def test_delete_many_registries():
+    orders_repository = OrdersRepository(conn)
+    filter_obj = {
+        "itens.refrigerante": { "$exists": True }
+    }
+    orders_repository.delete_many_registries(filter_obj)
