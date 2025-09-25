@@ -8,4 +8,3 @@ class HttpRequest:
         self.body = body
         self.headers = headers
         self.params = params
-
