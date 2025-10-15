@@ -47,11 +47,11 @@ class OrdersRepository(OrdersRepositoryInterface):
         )
         return data
 
-    def edit_registry(self, object_id: str, new_values: dict) -> None:
+    def edit_registry(self, order_id: str, update_fields: dict) -> None:
         collection = self.__db_connection.get_collection(self.__collection_name)
         collection.update_one(
-            { "_id": ObjectId(object_id) },
-            { "$set": new_values }
+            { "_id": ObjectId(order_id) },
+            { "$set": update_fields }
         )
 
     def edit_many_registries(self, filter_obj: dict, new_values: dict) -> None:
